@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var timeval = 500
+        var row = 0
+        var ttime
+        var ts
+        var fs = 15
+        var rowh = 50
+        var cans = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"];
+        var rl　//每行字数　
+        function down() {
+            timeval = timeval + 50
+        }
+
+        function up() {
+            if (timeval > 100) timeval = timeval - 50
+        }
+
+        function begin() {
+            row = 0;
+            txt2arr();
+            timedCount();
+        }
+
+        function timedCount() {
+            ttime = setTimeout("timedCount()", timeval)
+            canlist();
+        }
+
+        function move(s) {
+            var j;
+            for (j = 0; j < fs - 1; j++) {
+                cans[j] = cans[j + 1];
+            }
+            cans[fs - 1] = s;
+        }
+
+        function canlist() {
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");  //2d用引用括起来
+            var ww = window.innerWidth;
+            context.clearRect(0, 0, ww, 800);
+            // 设置画笔的颜色和大小
+            context.fillStyle = "black";  // 填充颜色为黑色
+            context.strokeStyle = "blue";  // 画笔的颜色
+            context.lineWidth = 5;  // 指定描边线的宽度
+            context.save();
+            context.beginPath();
+            // 写字
+            if (fs == 15) {
+                context.font = "48px orbitron";
+                for (j = 0; j < fs; j++)
+                    context.fillText(cans[j], 10, rowh + j * 50);
+            } else {
+                context.font = "96px orbitron";
+                for (j = 0; j < fs; j++)
+                    context.fillText(cans[j], 10, rowh + j * 100);
+            }
+            context.restore();
+            context.closePath();
+            if (rowh > 5) rowh = rowh - 5;
+            else {
+                if (fs == 15) rowh = 50; else rowh = 100;
+                updaterow();
+            }
+        }
+
+        function changeBorder() {
+            fs = 10;
+            rowh = 100;
+        }
+
+        function txt2arr() {//取文本框内容到数组
+            s = document.getElementById("mytx").value;//取文本框内容，检测回车
+            if (s.indexOf('\n') == -1) {
+                alert("没内容");
+                return false;
+            }
+            ts = s.split('\n');
+        }
+
+        function updaterow() {//更新一行，对每一段以固定字数更新行,小字体显示１５行，大字体10行
+            //　row表示数组当前行，
+            if (row < ts.length) {
+                var s;
+                ww = window.innerWidth;
+                rl = ww / rowh;
+                if (ts[row].length > rl) {
+                    s = ts[row].substr(0, rl);
+                    ts[row] = ts[row].substr(rl);
+                } else {
+                    s = ts[row];
+                    row = row + 1;
+                }
+                move(s);
+            } else clearTimeout(ttime);
+        }
+    </script>
+</head>
+<body>
+<div>
+    <canvas id="canvas" width="2200" height="800" 　style="border:1px solid #c3c3c3">抱歉，您的浏览器不支持canvas元素</canvas>
+</div>
+
+<p>
+    <input type="button" onclick="changeBorder()" value="大字体">
+    <input type="button" value="开始" onClick="begin()">
+    <input type="button" value="慢" onClick="down()">
+    <input type="button" value="快" onClick="up()">
+</p>
+<p>
+    <textarea rows="9" cols="60" name="mytx" id="mytx" style="overflow:hidden;font-size:20px"></textarea>
+</p>
+</body>
+</html>
