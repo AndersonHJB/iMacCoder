@@ -2,6 +2,11 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/GitHubPages/QuicksandTeam.github.io" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/GitHubPages/aiyc.top/aiyc.top" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/GitHubPages/aiyc.top/aiyctop/themes/next" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/GitHubPages/django_column" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Tester/wm" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/WebCode/Project" vcs="Git" />
   </component>
 </project>
